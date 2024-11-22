@@ -9,18 +9,18 @@ def desplaycat():
         print("Categories available:")
     for y in categories:
         print(y)
-    categories.remove(all)
+    categories.remove()
 def addexpenses():
     #This adds expenses
     total = 0
     #This calculates the total cost
     while True:
         #Forever
-        cost = int(input("How much did it cost?\n"))
+        cost = int(input("How much did it cost?\n$"))
         category = input("What is the category?\n")
         description = input("Description:\n")
         time = input("When did you buy this?\n")
-        person = input("Who are you?")
+        person = input("Who are you?\n")
         #these find the input of the user
         dictionary = {
             "cost" : cost,
@@ -79,26 +79,44 @@ def viewcategory():
             if e['type'] != "food" and e['type'] != "entertainment" and e['type'] != "education" and e['type'] != "technology" and e['type'] != "home":
                 print(e)
 def removecat():
+    #desplays the categories
     desplaycat()
     rc = input("What category would you like to remove?\n")
     for c in Lod:
         if c['type'] == rc:
             Lod.remove(c)
-while True:
-    choice = int(input("Choose an option:\n1. Add Expense\n2. View all Expenses\n3. Calculate Total Expenses\n4. View Expenses by Category\n5. Save Expenses\n6. Remove Category\n7. Quit\n"))
-    #This allows users to choose between which function to use
-    if choice == 1: 
-        addexpenses()
-    elif choice == 2:
-        viewallexpenses()
-    elif choice == 3:
-        totalcost()
-    elif choice == 4:
-        viewcategory()
-    elif choice == 5:
-        continue
-    elif choice == 6:
-        removecat()
-    elif choice == 7:
-        break
+def save(): 
+    a = open("savedexpenses.txt", "a")
+    for xy in Lod:
+        za = f"{"Cost: $"+str(xy['cost'])}, {"Category: " + xy['type']}, {"Description: " + xy['description']}, {"Date: " + xy['time']}, {"User: "+xy['person']}\n"
+        a = open("savedexpenses.txt", "r")
+        if za in a:
+            continue
+        else:
+            a = open("savedexpenses.txt", "a")
+            a.write(za)
+    print("expenses were saved in savedexpenses.txt")
+def main():
+    print("Welcome to CHEE$E\nA multi-millionaire company designed to track your money")
+    print("____       ____ ____ __|__ ____")
+    print("|    |___| |__  |__  |_|_  |___")
+    print("|___ |   | |___ |___  _|_| |___")
+    while True:
+        choice = int(input("Choose an option:\n1. Add Expense\n2. View all Expenses\n3. Calculate Total Expenses\n4. View Expenses by Category\n5. Save Expenses\n6. Remove Category\n7. Quit\n"))
+        #This allows users to choose between which function to use
+        if choice == 1: 
+            addexpenses()
+        elif choice == 2:
+            viewallexpenses()
+        elif choice == 3:
+            totalcost()
+        elif choice == 4:
+            viewcategory()
+        elif choice == 5:
+            save()
+        elif choice == 6:
+            removecat()
+        elif choice == 7:
+            break
+main()
 
